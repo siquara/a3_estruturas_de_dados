@@ -9,7 +9,6 @@ const rl = readline.createInterface({
 
 const variableValues = new Map();
 
-// Função recursiva para avaliar a árvore sintática
 async function evaluate(node) {
     if (node.variable) {
         const varName = node.variable;
@@ -44,7 +43,6 @@ async function evaluate(node) {
             case '/':
                 return evaluatedArgs[0].divide(evaluatedArgs[1]);
             case '**':
-                // exponenciação: espera expoente inteiro não-negativo
                 if (typeof evaluatedArgs[1].a !== 'undefined' && evaluatedArgs[1].b === 0) {
                     const n = evaluatedArgs[1].a;
                     return evaluatedArgs[0].pow(n);
@@ -74,7 +72,7 @@ async function main() {
     console.log("Exemplos: (3+4i) * (1-2i) ou sqrt(conj(x))");
 
     while (true) {
-        variableValues.clear(); // Limpa variáveis a cada nova expressão
+        variableValues.clear(); 
         const input = await askQuestion('\n> Digite sua expressão: ');
 
         if (input.toLowerCase() === 'sair') {
@@ -82,7 +80,7 @@ async function main() {
         }
 
         try {
-             // Tratamento para a função de igualdade
+
             const equalityMatch = input.match(/^igual\s*\((.+),(.+)\)$/i);
             if (equalityMatch) {
                 const expr1 = equalityMatch[1].trim();
@@ -92,7 +90,7 @@ async function main() {
                 const ast1 = parse(tokenize(expr1));
                 const result1 = await evaluate(ast1);
                 
-                variableValues.clear(); // Limpa para a segunda avaliação
+                variableValues.clear(); 
 
                 console.log("Avaliando segunda expressão:", expr2);
                 const ast2 = parse(tokenize(expr2));
@@ -109,9 +107,9 @@ async function main() {
                 }
 
             } else {
-                // Execução normal da expressão
+
                 const tokens = tokenize(input);
-                const ast = parse(tokens); // AST = Abstract Syntax Tree (Árvore Sintática Abstrata)
+                const ast = parse(tokens);
                 console.log("Árvore Sintática (LISP-like):", JSON.stringify(ast));
 
                 const result = await evaluate(ast);
@@ -126,7 +124,7 @@ async function main() {
     rl.close();
 }
 
-// Exportações para permitir testes automatizados
+
 module.exports = { evaluate, variableValues, tokenize, parse, askQuestion };
 
 if (require.main === module) {
