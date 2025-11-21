@@ -1,20 +1,18 @@
 function tokenize(expression) {
-    // Captura '**' como token único e também operadores simples
     const spacedExpression = expression.replace(/(\*\*|[\(\)\+\-\*\/,])/g, ' $1 ');
     return spacedExpression.trim().split(/\s+/);
 }
 
-// Converte um token para um número complexo, se possível
 function tokenToComplex(token) {
     token = token.trim();
 
-    // casos especiais simples
+
     if (/^i$/i.test(token)) return { a: 0, b: 1 };
     if (/^-i$/i.test(token)) return { a: 0, b: -1 };
 
     let m;
 
-    // forma pura imaginária: 2i, -2i, .5i, +2i
+
     if ((m = token.match(/^([+-]?(?:\d+\.?\d*|\.\d+))?i$/i))) {
         const numStr = m[1];
         const b = (numStr === undefined || numStr === '' || numStr === '+') ? 1
@@ -22,19 +20,18 @@ function tokenToComplex(token) {
         return { a: 0, b };
     }
 
-    // forma combinada em um token: 3+2i, -3-0.5i
     if ((m = token.match(/^([+-]?(?:\d+\.?\d*|\.\d+))([+-](?:\d+\.?\d*|\.\d+))i$/i))) {
         const a = parseFloat(m[1]);
         const b = parseFloat(m[2]);
         return { a, b };
     }
 
-    // número real puro
+
     if ((m = token.match(/^([+-]?(?:\d+\.?\d*|\.\d+))$/))) {
         return { a: parseFloat(m[1]), b: 0 };
     }
 
-    return null; // não é um número complexo, pode ser um operador, parêntese ou variável
+    return null; 
 }
 
 function parse(tokens) {
@@ -60,7 +57,7 @@ function parse(tokens) {
         return left;
     }
 
-    // Trata exponenciação '**' (direita-associativa)
+
     function parsePower() {
         let left = parseFactor();
         if (index < tokens.length && tokens[index] === '**') {
@@ -74,7 +71,7 @@ function parse(tokens) {
     function parseFactor() {
         let token = tokens[index++];
 
-        // Tratamento de unário + e -
+
         if (token === '+') {
             return parseFactor();
         }
@@ -107,7 +104,7 @@ function parse(tokens) {
             return complex;
         }
         
-        // Se não for um número, é uma variável
+
         if (token.match(/^[a-zA-Z]+$/)) {
             return { variable: token };
         }
