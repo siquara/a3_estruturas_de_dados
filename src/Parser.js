@@ -1,5 +1,7 @@
+const { imaginaryNumber, divideRealAndImag, realNumber, singleI, negativeI, separators, identifier } = require("./utilExpressions");
+
 function tokenize(expression) {
-    const spacedExpression = expression.replace(/(\*\*|[\(\)\+\-\*\/,])/g, ' $1 ');
+    const spacedExpression = expression.replace(separators(), ' $1 ');
     return spacedExpression.trim().split(/\s+/);
 }
 
@@ -7,27 +9,27 @@ function tokenToComplex(token) {
     token = token.trim();
 
 
-    if (/^i$/i.test(token)) return { a: 0, b: 1 };
-    if (/^-i$/i.test(token)) return { a: 0, b: -1 };
+    if (singleI().test(token)) return { a: 0, b: 1 };
+    if (negativeI().test(token)) return { a: 0, b: -1 };
 
     let m;
 
 
-    if ((m = token.match(/^([+-]?(?:\d+\.?\d*|\.\d+))?i$/i))) {
+    if ((m = token.match(imaginaryNumber()))) {
         const numStr = m[1];
         const b = (numStr === undefined || numStr === '' || numStr === '+') ? 1
                 : (numStr === '-' ? -1 : parseFloat(numStr));
         return { a: 0, b };
     }
 
-    if ((m = token.match(/^([+-]?(?:\d+\.?\d*|\.\d+))([+-](?:\d+\.?\d*|\.\d+))i$/i))) {
+    if ((m = token.match(divideRealAndImag()))) {
         const a = parseFloat(m[1]);
         const b = parseFloat(m[2]);
         return { a, b };
     }
 
 
-    if ((m = token.match(/^([+-]?(?:\d+\.?\d*|\.\d+))$/))) {
+    if ((m = token.match(realNumber()))) {
         return { a: parseFloat(m[1]), b: 0 };
     }
 
@@ -105,7 +107,7 @@ function parse(tokens) {
         }
         
 
-        if (token.match(/^[a-zA-Z]+$/)) {
+        if (identifier().test(token)) {
             return { variable: token };
         }
 
