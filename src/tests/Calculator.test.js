@@ -1,6 +1,6 @@
-const Complex = require('./Complex');
-const { tokenize, parse } = require('./Parser');
-const { evaluate, variableValues } = require('./Calculator');
+const Complex = require('../Complex.js');
+const { tokenize, parse } = require('../Parser.js');
+const { evaluate, variableValues } = require('../Calculator.js');
 
 beforeEach(() => {
     variableValues.clear();

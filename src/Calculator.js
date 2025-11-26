@@ -1,11 +1,9 @@
 const readline = require('readline');
 const Complex = require('./Complex.js');
 const { tokenize, parse } = require('./Parser.js');
+const prompts = require('prompts');
+const chalk = require('chalk');
 
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
 
 const variableValues = new Map();
 
@@ -59,25 +57,40 @@ async function evaluate(node) {
     throw new Error('Nó da árvore inválido');
 }
 
-function askQuestion(query) {
-    return new Promise(resolve => rl.question(query, resolve));
+async function askQuestion(query) {
+    const response = await prompts({ type: 'text', name: 'value', message: query });
+    return response.value;
 }
 
 async function main() {
-    console.log("--- Calculadora Científica de Números Complexos ---");
-    console.log("Operadores: +, -, *, /, **");
-    console.log("Funções: conj(z), sqrt(z)");
-    console.log("Use 'igual(expr1, expr2)' para verificar igualdade.");
-    console.log("Use 'sair' para fechar a calculadora.");
-    console.log("Exemplos: (3+4i) * (1-2i) ou sqrt(conj(x))");
+    console.log(chalk.magenta.bold('\n--- Calculadora Científica de Números Complexos ---'));
+    console.log(`${chalk.yellow('Operadores:')} ${chalk.green('+')} ${chalk.green('-')} ${chalk.green('*')} ${chalk.green('/')} ${chalk.green('**')}`);
+    console.log(`${chalk.yellow('Funções:')} ${chalk.cyan('conj(z)')} ${chalk.cyan('sqrt(z)')}`);
+    console.log(`${chalk.yellow("Comandos:")} ${chalk.green("igual(expr1, expr2)")}`);
+    console.log(`${chalk.yellow('Exemplo:')} ${chalk.cyan('(3+4i) * (1-2i)')} ${chalk.grey('ou')} ${chalk.cyan('sqrt(conj(x))')}`);
 
-    while (true) {
-        variableValues.clear(); 
-        const input = await askQuestion('\n> Digite sua expressão: ');
+    let running = true;
+    while (running) {
+        variableValues.clear();
 
-        if (input.toLowerCase() === 'sair') {
+        const { action } = await prompts({
+            type: 'select',
+            name: 'action',
+            message: 'Escolha uma opção:',
+            choices: [
+                { title: 'Inserir expressão', value: 'inserir' },
+                { title: 'Sair', value: 'sair' }
+            ]
+        });
+
+        if (action === 'sair') {
+            running = false;
             break;
         }
+
+        const { input } = await prompts({ type: 'text', name: 'input', message: '\n> Digite sua expressão:' });
+
+        if (!input) continue;
 
         try {
 
@@ -86,44 +99,43 @@ async function main() {
                 const expr1 = equalityMatch[1].trim();
                 const expr2 = equalityMatch[2].trim();
 
-                console.log("Avaliando primeira expressão:", expr1);
+                console.log(chalk.blue.bold('\nAvaliando primeira expressão:'), chalk.white.bold(expr1));
                 const ast1 = parse(tokenize(expr1));
                 const result1 = await evaluate(ast1);
                 
-                variableValues.clear(); 
+                variableValues.clear();
 
-                console.log("Avaliando segunda expressão:", expr2);
+                console.log(chalk.blue.bold('Avaliando segunda expressão:'), chalk.white.bold(expr2));
                 const ast2 = parse(tokenize(expr2));
                 const result2 = await evaluate(ast2);
 
                 if (result1.equals(result2)) {
-                    console.log(`Resultado: As expressões são IGUAIS.`);
-                    console.log(`(${expr1}) = ${result1.toString()}`);
-                    console.log(`(${expr2}) = ${result2.toString()}`);
+                    console.log(chalk.green.bold('\nResultado: As expressões são IGUAIS.'));
+                    console.log(chalk.green(`(${expr1}) = ${result1.toString()}`));
+                    console.log(chalk.green(`(${expr2}) = ${result2.toString()}`));
                 } else {
-                    console.log(`Resultado: As expressões são DIFERENTES.`);
-                    console.log(`(${expr1}) = ${result1.toString()}`);
-                    console.log(`(${expr2}) = ${result2.toString()}`);
+                    console.log(chalk.red.bold('\nResultado: As expressões são DIFERENTES.'));
+                    console.log(chalk.yellow(`(${expr1}) = ${result1.toString()}`));
+                    console.log(chalk.yellow(`(${expr2}) = ${result2.toString()}`));
                 }
 
             } else {
 
-                const tokens = tokenize(input);
-                const ast = parse(tokens);
-                console.log("Árvore Sintática (LISP-like):", JSON.stringify(ast));
+                        const tokens = tokenize(input);
+                        const ast = parse(tokens);
+                        console.log(chalk.cyan('\nÁrvore Sintática (LISP-like):'));
+                        console.log(chalk.yellow(JSON.stringify(ast, null, 2)));
 
-                const result = await evaluate(ast);
-                console.log("Resultado:", result.toString());
+                        const result = await evaluate(ast);
+                        console.log(chalk.green.bold('\nResultado:'), chalk.bold.white(result.toString()));
             }
 
         } catch (error) {
-            console.error("Erro:", error.message);
+            console.error(chalk.red('Erro:'), error.message);
         }
     }
 
-    rl.close();
 }
-
 
 module.exports = { evaluate, variableValues, tokenize, parse, askQuestion };
 

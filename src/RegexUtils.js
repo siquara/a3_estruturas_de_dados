@@ -2,7 +2,7 @@ function imaginaryNumber(){
     return /^([+-]?(?:\d+\.?\d*|\.\d+))?i$/i
 }
 
-function divideRealAndImag(){
+function realWithImag(){
     return /^([+-]?(?:\d+\.?\d*|\.\d+))([+-](?:\d+\.?\d*|\.\d+))i$/i
 }
 
@@ -22,8 +22,12 @@ function separators(){
     return /(\*\*|[\(\)\+\-\*\/\,])/g
 }
 
-function identifier(){
+function identifierVariables(){
     return /^[a-zA-Z]+$/
 }
 
-module.exports = { imaginaryNumber, divideRealAndImag, realNumber, singleI, negativeI, separators, identifier };
+function removeWhiteSpace(){
+    return /\s+/
+}
+
+module.exports = { imaginaryNumber, realWithImag, realNumber, singleI, negativeI, separators, identifierVariables, removeWhiteSpace};

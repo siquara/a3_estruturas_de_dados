@@ -1,19 +1,17 @@
-const { imaginaryNumber, divideRealAndImag, realNumber, singleI, negativeI, separators, identifier } = require("./utilExpressions");
+const { imaginaryNumber, realWithImag, realNumber, singleI, negativeI, separators, identifierVariables, removeWhiteSpace } = require("./RegexUtils.js");
 
 function tokenize(expression) {
     const spacedExpression = expression.replace(separators(), ' $1 ');
-    return spacedExpression.trim().split(/\s+/);
+    return spacedExpression.trim().split(removeWhiteSpace());
 }
 
 function tokenToComplex(token) {
     token = token.trim();
 
-
     if (singleI().test(token)) return { a: 0, b: 1 };
     if (negativeI().test(token)) return { a: 0, b: -1 };
 
     let m;
-
 
     if ((m = token.match(imaginaryNumber()))) {
         const numStr = m[1];
@@ -22,12 +20,11 @@ function tokenToComplex(token) {
         return { a: 0, b };
     }
 
-    if ((m = token.match(divideRealAndImag()))) {
+    if ((m = token.match(realWithImag()))) {
         const a = parseFloat(m[1]);
         const b = parseFloat(m[2]);
         return { a, b };
     }
-
 
     if ((m = token.match(realNumber()))) {
         return { a: parseFloat(m[1]), b: 0 };
@@ -107,7 +104,7 @@ function parse(tokens) {
         }
         
 
-        if (identifier().test(token)) {
+        if (identifierVariables().test(token)) {
             return { variable: token };
         }
 
