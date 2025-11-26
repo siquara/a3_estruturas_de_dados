@@ -4,23 +4,23 @@ Projeto para a disciplina: Estruturas de Dados e Algoritmos
 
 Professor: Wellington Lacerda Silveira da Silva
 
-## ✨ Contribuidores 
+## Contribuidores 
 
 - Alisson Lucas Alves de Oliveira — RA: 1272322139
 - Alisson Bezerra Brito — RA: 1272326397
 - Beatriz Andrade Siquara — RA: 1272321172
 
-## 📝 Resumo 
+## Resumo 
 
 Este repositório contém uma calculadora de números complexos que: representa complexos na forma a + bi, avalia expressões, constrói e mostra a árvore sintática (AST), e executa operações como soma, subtração, multiplicação, divisão, conjugado, potenciação e raiz quadrada. Suporta também variáveis em expressões (valores solicitados interativamente) e compara a igualdade entre expressões.
 
-## 📚 Conteúdo rápido 
+## Conteúdo rápido 
 
 - Código principal: `src/Complex.js`, `src/Parser.js`, `src/Calculator.js`
 - Testes: `src/Calculator.test.js` (cobertura de operações e funções básicas)
 - Como executar: consulte a seção "Como testar / usar" abaixo
 
-## 📑 Índice 
+## Índice 
 
 1. [Funcionalidades](#funcionalidades)
 2. [Como testar / usar](#como-testar--usar)
@@ -28,7 +28,7 @@ Este repositório contém uma calculadora de números complexos que: representa 
 4. [Casos de teste cobertos](#casos-de-teste-cobertos)
 5. [Próximos passos sugeridos](#próximos-passos-sugeridos)
 
-## 🚀 Funcionalidades 
+## Funcionalidades 
 
 - Representação de números complexos (a + bi / a - bi)
 - Operações aritméticas: +, -, \*, /
@@ -38,7 +38,7 @@ Este repositório contém uma calculadora de números complexos que: representa 
 - Suporte a variáveis (valores solicitados em tempo de execução)
 - Detecção de erros básicos (divisão por zero, sintaxe inválida)
 
-## ▶️ Como testar / usar 
+## Como testar / usar 
 
 1. Instale dependências (Node.js e npm precisam estar instalados):
 
@@ -64,14 +64,14 @@ Exemplos de expressões suportadas:
 - (1+i) \*\* 2
 - sqrt(3+4i)
 
-## 🗂️ Estrutura do projeto 
+## Estrutura do projeto 
 
 - `src/Complex.js` — Classe e operações para números complexos
 - `src/Parser.js` — Tokenizador e parser que constrói a AST
 - `src/Calculator.js` — Avaliador da AST, interface de execução e utilitários
 - `src/Calculator.test.js` — Testes unitários
 
-## ✅ Casos de teste cobertos (resumo) 
+## Casos de teste cobertos (resumo) 
 
 Os testes incluem múltiplos casos para cada operação. Exemplos:
 
