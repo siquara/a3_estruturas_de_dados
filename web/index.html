@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Calculadora de Números Complexos</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">Complex Tools</div>
+      <nav>
+        <a href="./index.html" aria-current="page">Calculadora</a>
+        <a href="./wifi.html">Exemplo Wi‑Fi (Fases)</a>
+      </nav>
+    </header>
+
+    <main class="container">
+      <section class="card">
+        <h1>Calculadora de Números Complexos</h1>
+        <p class="muted">
+          Formatos aceitos: "3+4i", "3-4i", "4i", "-i", "5". Resultados em forma retangular e polar.
+        </p>
+        <form id="calc-form" class="grid">
+          <label>
+            z₁
+            <input id="z1" name="z1" placeholder="Ex.: 3+4i" autocomplete="off" />
+          </label>
+          <label>
+            Operação
+            <select id="op" name="op">
+              <option value="add">Somar (z₁ + z₂)</option>
+              <option value="sub">Subtrair (z₁ − z₂)</option>
+              <option value="mul">Multiplicar (z₁ · z₂)</option>
+              <option value="div">Dividir (z₁ ÷ z₂)</option>
+            </select>
+          </label>
+          <label>
+            z₂
+            <input id="z2" name="z2" placeholder="Ex.: 1-2i" autocomplete="off" />
+          </label>
+          <div class="actions">
+            <button type="submit" class="primary">Calcular</button>
+            <button type="button" id="swap">Trocar z₁ ↔ z₂</button>
+            <button type="reset">Limpar</button>
+          </div>
+        </form>
+
+        <div id="results" class="results">
+          <div>
+            <h3>Resultado</h3>
+            <output id="res-rect">—</output>
+            <div class="muted small" id="res-rect-breakdown">—</div>
+          </div>
+          <div>
+            <h3>Forma Polar</h3>
+            <output id="res-polar">—</output>
+            <div class="muted small" id="res-polar-breakdown">—</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Notas rápidas</h2>
+        <ul class="muted">
+          <li>Parte real: Re(z)=a; parte imaginária: Im(z)=b.</li>
+          <li>Módulo: |z| = sqrt(a² + b²); Fase: θ = atan2(b, a).</li>
+          <li>Forma polar: z = r·e^{iθ} = r ∠ θ.</li>
+        </ul>
+      </section>
+    </main>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+  </html>

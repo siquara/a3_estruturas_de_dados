@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Soma de Fases (Wi‑Fi) com Números Complexos</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">Complex Tools</div>
+      <nav>
+        <a href="./index.html">Calculadora</a>
+        <a href="./wifi.html" aria-current="page">Exemplo Wi‑Fi (Fases)</a>
+      </nav>
+    </header>
+
+    <main class="container">
+      <section class="card">
+        <h1>Soma e Subtração de Ondas (Fases)</h1>
+        <p class="muted">
+          Em RF (ex.: Wi‑Fi), sinais são ondas senoidais. Representamos cada onda como um fasor complexo
+          z = A·e^{iφ}. Somar sinais vira soma vetorial no plano complexo.
+        </p>
+
+        <div class="grid">
+          <div class="controls">
+            <h3>Onda 1</h3>
+            <label>Amp (A₁): <input id="a1" type="range" min="0" max="2" step="0.01" value="1" /></label>
+            <label>Fase (°): <input id="p1" type="range" min="-180" max="180" step="1" value="0" /></label>
+
+            <h3>Onda 2</h3>
+            <label>Amp (A₂): <input id="a2" type="range" min="0" max="2" step="0.01" value="1" /></label>
+            <label>Fase (°): <input id="p2" type="range" min="-180" max="180" step="1" value="90" /></label>
+
+            <h3>Frequência</h3>
+            <label>ciclos na tela: <input id="freq" type="range" min="1" max="8" step="1" value="3" /></label>
+          </div>
+
+          <div class="canvases">
+            <canvas id="waves" width="900" height="260" class="canvas"></canvas>
+            <canvas id="phasor" width="320" height="320" class="canvas"></canvas>
+          </div>
+        </div>
+
+        <div class="results">
+          <div>
+            <h3>Fasores</h3>
+            <div class="mono small" id="phasor-text">—</div>
+          </div>
+          <div>
+            <h3>Interpretação</h3>
+            <p class="muted small">
+              Soma: z_sum = A₁e^{iφ₁} + A₂e^{iφ₂}.
+              Em coordenadas: Re(z)=A₁cosφ₁ + A₂cosφ₂, Im(z)=A₁sinφ₁ + A₂sinφ₂,
+              |z|=sqrt(Re²+Im²), θ=atan2(Im, Re).
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="./wifi.js"></script>
+  </body>
+  </html>

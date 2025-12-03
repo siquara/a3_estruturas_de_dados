@@ -18,6 +18,7 @@ Este repositório contém uma calculadora de números complexos que: representa 
 
 - Código principal: `src/Complex.js`, `src/Parser.js`, `src/Calculator.js`
 - Testes: `src/Calculator.test.js` (cobertura de operações e funções básicas)
+- Interface Web: `web/index.html` (calculadora) e `web/wifi.html` (exemplo Wi‑Fi)
 - Como executar: consulte a seção "Como testar / usar" abaixo
 
 ## Índice 
@@ -42,13 +43,13 @@ Este repositório contém uma calculadora de números complexos que: representa 
 
 1. Instale dependências (Node.js e npm precisam estar instalados):
 
-```bash
+```powershell
 npm install
 ```
 
 2. Execute os testes unitários:
 
-```bash
+```powershell
 npm test
 ```
 
@@ -63,6 +64,21 @@ Exemplos de expressões suportadas:
 - conj(1-i)
 - (1+i) \*\* 2
 - sqrt(3+4i)
+
+4. Interface Web (calculadora e exemplo Wi‑Fi)
+
+- Servir localmente (recomendado):
+
+```powershell
+npm run web
+```
+
+Abra `http://localhost:5173` e use:
+
+- `web/index.html`: Calculadora de números complexos (entrada em forma textual, resultado em forma retangular e polar);
+- `web/wifi.html`: Demonstração interativa de soma/subtração de fases (fasores), com visualização das ondas e do diagrama fasorial.
+
+Alternativamente, abra os arquivos diretamente no navegador (funciona sem bundler).
 
 ## Estrutura do projeto 
 
